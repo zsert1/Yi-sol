@@ -295,24 +295,36 @@ var weakSetObj = { example: "any" };
 var weakSet = new WeakSet();
 weakSet.add(weakSetObj);
 
-const promise4 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    try {
-      resolve("hello");
-    } catch (error) {
-      reject(error);
-    }
-  }, 7000);
-});
+const promise4 = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const ok = "promise4의resolve";
+      resolve(ok);
+      throw new Error(`고의에러`);
+    }, 7000);
+  });
+};
 
-promise4
-  .then((dat) => {
-    console.log("then", dat);
-  })
-  .catch((err) => {
-    console.log("catch", err);
-  }).finally;
-console.log("finally");
+const errorr = async () => {
+  var ok = await promise4();
+  console.log(ok);
+};
+errorr();
+
+
+
+const promise6 = () => {
+  return new Promise((resolve, reject) => {
+    const ok = "async()/await 사용";
+    resolve(ok);
+  });
+};
+
+const another = async () => {
+  var resultok = await promise6();
+  console.log(resultok);
+};
+another();
 
 const promise = new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -404,7 +416,7 @@ console.log(findP);
 
 const findFirstWhere = [1, 2, 3, 4, 5].findIndex(function (number) {
   return number % 2 === 0;
-}); 
+});
 
 const findFirstWhere2 = [
   { name: "Zero" },
@@ -417,106 +429,190 @@ const findFirstWhere2 = [
 console.log(findFirstWhere);
 console.log(findFirstWhere2);
 
-const arr = [1,2,3,4,5];
-console.log(arr.copyWithin(1,2));//원본을 수정 시킨다!
+const arr = [1, 2, 3, 4, 5];
+console.log(arr.copyWithin(1, 2)); //원본을 수정 시킨다!
 console.log(arr);
-console.log([1,2,3,4,5].copyWithin(1,2,4));
-console.log([1,2,3,4,5].copyWithin(1,1,4));
+console.log([1, 2, 3, 4, 5].copyWithin(1, 2, 4));
+console.log([1, 2, 3, 4, 5].copyWithin(1, 1, 4));
 
-
-const st= 'Zero is Great'.startsWith('Zero');
-const st2= 'Zero is Great'.startsWith('is', 3);
+const st = "Zero is Great".startsWith("Zero");
+const st2 = "Zero is Great".startsWith("is", 3);
 console.log(st);
 console.log(st2);
 
-const st3='Zero is Great'.endsWith('t'); 
-const st4='Zero is Great'.endsWith('s', 7);
+const st3 = "Zero is Great".endsWith("t");
+const st4 = "Zero is Great".endsWith("s", 7);
 console.log(st3);
 console.log(st4);
 
-const st5='JavaScript '.repeat(5);
+const st5 = "JavaScript ".repeat(5);
 console.log(st5);
 
-console.log (st5.includes('J'));
-console.log (st5.includes('j'));
+console.log(st5.includes("J"));
+console.log(st5.includes("j"));
 
-const arrr= Object.assign({ }, { a: 1 }); 
-const arrrPlus=Object.assign({ a: 1, b: 1 }, { a: 2 }, { a: 3 });
-const arrrPlus2=Object.assign({ a: 1, b: 1 }, { a: 2 }, { a: 3 },{c:6});
+const arrr = Object.assign({}, { a: 1 });
+const arrrPlus = Object.assign({ a: 1, b: 1 }, { a: 2 }, { a: 3 });
+const arrrPlus2 = Object.assign({ a: 1, b: 1 }, { a: 2 }, { a: 3 }, { c: 6 });
 console.log(arrr);
 console.log(arrrPlus);
 console.log(arrrPlus2);
 
-console.log(Object.is('window', 'window')); 
-console.log(Object.is(0, -0)); 
-console.log(Object.is(null, null)); 
-console.log(`${Math.sign(-3)} :음수`); 
-console.log(`${Math.sign(-0)} :0의 음수`); 
-console.log(`${Math.sign(0)} :0의양수`); 
-console.log(`${Math.sign(4)} :양수`); 
-console.log(`${Math.sign('숫자가아닌 것')} :숫자가 아닌 것`); 
- 
-console.log(`Math.trunc(1.5): ${Math.trunc(1.5)}   Math.floor(1.9): ${Math.floor(1.9)}`);
-console.log(`Math.trunc(-1.5): ${Math.trunc(-1.5)}   Math.ceil(-1.1):${ Math.ceil(-1.1)}`);
+console.log(Object.is("window", "window"));
+console.log(Object.is(0, -0));
+console.log(Object.is(null, null));
+console.log(`${Math.sign(-3)} :음수`);
+console.log(`${Math.sign(-0)} :0의 음수`);
+console.log(`${Math.sign(0)} :0의양수`);
+console.log(`${Math.sign(4)} :양수`);
+console.log(`${Math.sign("숫자가아닌 것")} :숫자가 아닌 것`);
 
-console.log(`1은 정수이다? ${Number.isInteger(1)} `); 
-console.log(`0.1은 정수이다? ${Number.isInteger(0.1)} `); 
+console.log(
+  `Math.trunc(1.5): ${Math.trunc(1.5)}   Math.floor(1.9): ${Math.floor(1.9)}`
+);
+console.log(
+  `Math.trunc(-1.5): ${Math.trunc(-1.5)}   Math.ceil(-1.1):${Math.ceil(-1.1)}`
+);
 
+console.log(`1은 정수이다? ${Number.isInteger(1)} `);
+console.log(`0.1은 정수이다? ${Number.isInteger(0.1)} `);
 
 const target = {};
 const handler = {
-  get: ( (obj, name) => {
+  get: (obj, name) => {
     return `안녕 ${name}`;
-  })
+  },
 };
 const proxy = new Proxy(target, handler);
 console.log(proxy.zero);
-console.log(target.zero); 
+console.log(target.zero);
 
 class ttt {
   get zero() {
     return 222;
   }
-};
+}
 const t2 = new ttt();
-const t3 = { zero: 111};
+const t3 = { zero: 111 };
 
 t3.zero = 300;
-console.log('ttt.zero = ', t3.zero);
-
-
-
+console.log("ttt.zero = ", t3.zero);
 
 const target2 = {};
 const handler2 = {
-  set: ((obj, name, value) => {
+  set: (obj, name, value) => {
     console.log(`${name}가 ${value}로 설정되었습니다`);
-  })
+  },
 };
 const proxy2 = new Proxy(target2, handler2);
 console.log(target2.zero);
-proxy2.zero ='change';
-
-
+proxy2.zero = "change";
 
 const target3 = (a, b) => a + b;
 const handler3 = {
-  apply:((target3, thisArg, argList) => {
+  apply: (target3, thisArg, argList) => {
     return target3.apply(thisArg, argList);
-  })
+  },
 };
 const proxy3 = new Proxy(target3, handler3);
 console.log(proxy3(3, 5));
 
 const target6 = {};
 const handler6 = {
-  set: ((target6, name, value) => {
-    if (name === 'onlyNumber') {
+  set: (target6, name, value) => {
+    if (name === "onlyNumber") {
       if (!Number.isInteger(value)) {
-        throw new TypeError('onlyNumber에는 정수만 입력해주세요');
+        try {
+          throw new TypeError("onlyNumber에는 정수만 입력해주세요");
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
-  })
+  },
 };
 const proxy6 = new Proxy(target6, handler6);
-proxy6.onlyNumber = 'Hi'
+proxy6.onlyNumber = "Hi";
+
+const obj5 = { a: 1, b: "zero", c: true };
+console.log(Reflect.get(obj5, "a"));
+const arry = [1, "zero", true];
+console.log(Reflect.get(arry, 1));
+
+Reflect.set(obj5, "d", ["plus", "plusplus"]);
+console.log(obj5.d);
+const add = (a, b) => a + b;
+console.log(Reflect.apply(add, null, [10, 150]));
+
+//  const Person= ((first,last) =>{
+//   this.firstName = first;
+//   this.lastName = last;
+
+// });
+//   zero3=Reflect.construct(Person,['Zero','cho']);
+//   console.log(zero3);
+//  const zero4= new Person('zero','cho');
+//   console.log(zero4);
+
+function Person(first, last) {
+  this.firstName = first;
+  this.lastName = last;
+}
+const zero = Reflect.construct(Person, ["zero", "cho"]);
+console.log(zero);
+const zsro4 = new Person("zero", "cho");
+console.log(zsro4);
+
+console.log(Reflect.has(obj5, "b"));
+Reflect.deleteProperty(obj5, "c");
+console.log(obj5);
+
+const human = {
+  eat() {
+    console.log("먹다");
+  },
+  move() {
+    console.log("움직이다");
+  },
+};
+Reflect.setPrototypeOf(zero, human);
+console.log(Reflect.getPrototypeOf(zero, human));
+
+var i = 5;
+console.log((i **= 6));
+
+let obj7 = {
+  a: "hello",
+  b: "zero",
+};
+console.log(Object.values(obj7));
+
+const job = (x) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(x);
+      resolve(x);
+    }, x * 1000);
+  });
+};
+
+(async (x) => {
+  const [a, b] = await Promise.all([job(3), job(6)]);
+  const c = await job(9);
+  return a + b + c;
+})().then((res) => console.log(res));
+
+
+
+const fetchItems = () => {
+  return new Promise((resolve, reject) => {
+    var items = [1, 2, 3];
+    resolve(items);
+  });
+};
+
+const logItems = async () => {
+  var resultItems = await fetchItems();
+  console.log(resultItems);
+};
+logItems();
